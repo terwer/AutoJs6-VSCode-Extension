@@ -435,6 +435,7 @@ export class Extension {
                     script: editor.document.getText(),
                 });
             });
+            vscode.window.showInformationMessage("文件运行命令发送成功");
             return;
         }
         try {
@@ -447,6 +448,7 @@ export class Extension {
                     script: script,
                 });
             });
+            vscode.window.showInformationMessage("文件运行命令发送成功");
         } catch (error) {
             logDebug(error);
         }
@@ -743,7 +745,9 @@ export class Extension {
         }
         if (!this.client.sendProjectCommand(folder.fsPath, command)) {
             vscode.window.showErrorMessage('未发现已连接的设备');
+            return;
         }
+        vscode.window.showInformationMessage(`项目${command === "run_project" ? "运行" : "保存"}命令发送成功`);
     }
 
     private showCommandHierarchy() {
