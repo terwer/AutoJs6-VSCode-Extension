@@ -1431,11 +1431,11 @@ export class Extension {
     }
 
     runProject(url?: string) {
-        this.sendProjectCommand('run_project', url);
+        this.sendProjectCommand('run_project', undefined);
     }
 
     saveProject(url?: string) {
-        this.sendProjectCommand('save_project', url);
+        this.sendProjectCommand('save_project', undefined);
     }
 
     commandsHierarchy() {
