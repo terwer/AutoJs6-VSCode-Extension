@@ -316,7 +316,8 @@
         "compile": "tsc --allowJs false --typeRoots null -p ./",
         "watch": "tsc --allowJs false --typeRoots null -watch -p ./",
         "package": "vsce package",
-        "publish": "vsce publish"
+        "publish": "vsce publish",
+        "makeLink": "ln -s \"$(pwd)\" ~/.vscode/extensions/autojs6-vscode-extension"
     },
     "devDependencies": {
         "@sm003/autojs6-dts": "^2.0.0",
