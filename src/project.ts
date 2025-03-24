@@ -58,7 +58,8 @@ export class Project {
     constructor(folder: Uri) {
         this.folder = folder;
 
-        let projectPath = path.join(this.folder.fsPath, 'project.json');
+        const basePath = this.getBasePath();
+        let projectPath = path.join(basePath, 'project.json');
         if (!fs.existsSync(projectPath)) {
             vscode.window.showErrorMessage(`缺少必要的项目配置文件: ${projectPath}`);
             return Object.create(null);
@@ -78,10 +79,20 @@ export class Project {
     // noinspection JSUnusedLocalSymbols
     fileFilter(relativePath: string, absPath: string, stats: fs.Stats) {
         return this.config.ignore.filter((p) => {
-            const fullPath = path.join(this.folder.fsPath, p);
+            const basePath = this.getBasePath();
+            const fullPath = path.join(basePath, p);
             return absPath.startsWith(fullPath);
         }).length === 0;
     };
+
+    getBasePath() {
+        let basePath = this.folder.fsPath
+        const stats = fs.statSync(this.folder.fsPath);
+        if (stats.isFile()) {
+            basePath = path.dirname(this.folder.fsPath)
+        }
+        return basePath
+    }
 
     dispose() {
         this.watcher.dispose();
